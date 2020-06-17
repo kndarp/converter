@@ -14,6 +14,7 @@ env:
   IMAGE: ${{ github.repository }}
   REGISTRY_HOSTNAME: gcr.io
   REGION: asia-east1
+  SERVICE: converter
 
 jobs:
   setup-build-publish-deploy:
@@ -66,5 +67,5 @@ jobs:
     # Deploy the Docker image to the Cloud Run
     - name: Deploy
       run: |
-        gcloud components install beta && gcloud beta run deploy $IMAGE --quiet --image $REGISTRY_HOSTNAME/$PROJECT/$IMAGE:${GITHUB_SHA} --project $PROJECT --region $REGION --platform managed --no-allow-unauthenticated
+        gcloud components install beta && gcloud beta run deploy $SERVICE --quiet --image $REGISTRY_HOSTNAME/$PROJECT/$IMAGE:${GITHUB_SHA} --project $PROJECT --region $REGION --platform managed --no-allow-unauthenticated
 
