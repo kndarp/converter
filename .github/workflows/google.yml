@@ -57,14 +57,14 @@ jobs:
         docker build -t "$REGISTRY_HOSTNAME"/"$PROJECT"/"$IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
-# Hold off GCP steps until ready
-#    # Push the Docker image to Google Container Registry
-#    - name: Publish
-#      run: |
-#        docker push $REGISTRY_HOSTNAME/$PROJECT/$IMAGE:$GITHUB_SHA
-#
-#    # Deploy the Docker image to the Cloud Run
-#    - name: Deploy
-#      run: |
-#        gcloud components install beta && gcloud beta run deploy $IMAGE --quiet --image $REGISTRY_HOSTNAME/$PROJECT/$IMAGE:${GITHUB_SHA} --project $PROJECT --region $REGION --platform managed --no-allow-unauthenticated
-#
+
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |
+        docker push $REGISTRY_HOSTNAME/$PROJECT/$IMAGE:$GITHUB_SHA
+
+    # Deploy the Docker image to the Cloud Run
+    - name: Deploy
+      run: |
+        gcloud components install beta && gcloud beta run deploy $IMAGE --quiet --image $REGISTRY_HOSTNAME/$PROJECT/$IMAGE:${GITHUB_SHA} --project $PROJECT --region $REGION --platform managed --no-allow-unauthenticated
+
